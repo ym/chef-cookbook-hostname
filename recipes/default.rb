@@ -71,7 +71,6 @@ if fqdn
       }
       not_if { ::IO.read(hostfile) =~ /^HOSTNAME=#{fqdn}$/ }
       notifies :reload, 'ohai[reload_hostname]', :immediately
-      notifies :restart, 'service[network]', :delayed
     end
     # this is to persist the correct hostname after machine reboot
     sysctl = '/etc/sysctl.conf'
@@ -85,7 +84,6 @@ if fqdn
       }
       not_if { ::IO.read(sysctl).scan(regex).last == newline }
       notifies :reload, 'ohai[reload_hostname]', :immediately
-      notifies :restart, 'service[network]', :delayed
     end
     execute "hostname #{hostname}" do
       only_if { node['hostname'] != hostname }
