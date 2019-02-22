@@ -116,6 +116,10 @@ if fqdn
     action :append
   end
 
+  log "add hosts file entry for #{node['hostname_cookbook']['hostsfile_ip']}" do
+    level :info
+  end
+
   hostsfile_entry 'set hostname' do
     ip_address node['hostname_cookbook']['hostsfile_ip']
     hostname fqdn
